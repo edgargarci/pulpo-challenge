@@ -8,15 +8,15 @@ import { Observable } from 'rxjs';
 })
 export class MovieDBService {
 
+  public readonly urlBase = URIS_CONFIG.BASE_URL_MOVIE;
+  public readonly discover = URIS_CONFIG.DISCOVER_END_POINT;
+  public readonly apiKey = URIS_CONFIG.API_KEY;
+  public readonly apiKeyA = URIS_CONFIG.API_KEY_A;
+  public readonly list = URIS_CONFIG.LIST_END_POINT;
+
   constructor(private http: HttpClient) { }
-  public urlBase = URIS_CONFIG.BASE_URL_MOVIE;
-  public discover = URIS_CONFIG.DISCOVER_END_POINT;
-  public apiKey = URIS_CONFIG.API_KEY;
-  public apiKeyA = URIS_CONFIG.API_KEY_A;
-  public list = URIS_CONFIG.LIST_END_POINT;
 
-
-  public getMovies(page: number = 1, air_date: string = '2023-05-02'): Observable<Object> {
+  public getMovies(page: number = 1, air_date: string = '2023-05-02'): Observable<any> {
 
 
     const filters = `
@@ -50,7 +50,7 @@ with_runtime.lte=400`
     localStorage.setItem('actual-page', page.toString());
   }
 
-  public generateToken() {
+  public generateToken(): Observable<any> {
     return this.http.get(`https://api.themoviedb.org/3/authentication/token/new?${this.apiKey}`);
 
   }
@@ -60,7 +60,7 @@ with_runtime.lte=400`
 request_token=${token.request_token}`);
   }
 
-  public createMovieList() {
+  public createMovieList(): Observable<any> {
     const jsonSesion: any = localStorage.getItem('session_id');
 
     const { session_id } = JSON.parse(jsonSesion);

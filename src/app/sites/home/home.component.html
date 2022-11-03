@@ -8,8 +8,8 @@
         </button>
         <div class="vertical-movies" #moviesList>
             <section *ngFor="let movie of movies; let i = index">
-                <div class="content-img" [ngClass]="{'favorite':movie.favorite}"
-                    (click)="setBackground(movie.backdrop_path, movie)">
+                <div class="content-img" [ngClass]="{'favorite':movie.favorite, 'active': i == active}"
+                    (click)="setBackground(movie.backdrop_path, movie);active = i">
                     <img src="{{urlImg}}/w185/{{movie.poster_path}}" alt="{{movie.title}}">
                     <button class="add-favorite"
                         (click)="movie.favorite?removeMovieInList(movie.id, i) : setMovieToList(movie.id, i)">

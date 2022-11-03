@@ -2,6 +2,9 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { map } from 'rxjs';
 import { fromEvent } from 'rxjs/internal/observable/fromEvent';
 import { URIS_CONFIG } from 'src/app/config/urls-api';
+import { CreateList } from 'src/app/shared/interfaces/create-list';
+import { DiscoverResults, Movie } from 'src/app/shared/interfaces/movie-list';
+import { ResponseToken } from 'src/app/shared/interfaces/response-token';
 import { MovieDBService } from 'src/app/shared/services/movie-db.service';
 
 @Component({
@@ -13,11 +16,11 @@ export class HomeComponent implements OnInit {
   constructor(private _MovieDBService: MovieDBService) { }
   @ViewChild('moviesList', { read: ElementRef }) public moviesList!: ElementRef<any>;
 
-  public movies: any = [];
+  public movies: Movie[] = [];
   public urlImg: string = URIS_CONFIG.URL_IMAGES;
   public firstMovie: string = "";
   public scrollMovies$ = fromEvent(window, 'scroll', { capture: true });
-
+  public active = 0;
   public movieSelected = {};
 
   public page = {
@@ -34,8 +37,8 @@ export class HomeComponent implements OnInit {
 
     if (this._MovieDBService.getMovieLocalStorage()) {
       this.movies = this._MovieDBService.getMovieLocalStorage();
-      this.firstMovie = this.movies.at(0).backdrop_path;
-      this.movieSelected = this.movies.at(0);
+      this.firstMovie = this.movies[0].backdrop_path;
+      this.movieSelected = this.movies[0];
     } else {
       this.getMovies();
     }
@@ -61,12 +64,12 @@ export class HomeComponent implements OnInit {
 
   public getMovies() {
     this.page.page++;
-    this._MovieDBService.getMovies(this.page.page).subscribe((results: any) => {
+    this._MovieDBService.getMovies(this.page.page).subscribe((results: DiscoverResults) => {
       this.movies = [...this.movies, ...results.results];
       this._MovieDBService.setMovieLocalStorage(this.movies);
       this._MovieDBService.setPageActual(this.page.page);
-      this.page.page == 1 ? this.firstMovie = this.movies.at(0).backdrop_path : "";
-      this.movieSelected = this.movies.at(0);
+      this.firstMovie = this.page.page == 1 ? this.movies[0].backdrop_path : "";
+      this.movieSelected = this.movies[0];
       this.page.totalPages = results.total_pages;
     });
   }
@@ -77,7 +80,7 @@ export class HomeComponent implements OnInit {
   }
 
   public generateToken() {
-    this._MovieDBService.generateToken().subscribe((tkn: any) => {
+    this._MovieDBService.generateToken().subscribe((tkn: ResponseToken) => {
       localStorage.setItem('token', JSON.stringify(tkn));
       this.startSession(tkn);
       window.open(`https://www.themoviedb.org/authenticate/${tkn.request_token}`);
@@ -97,7 +100,7 @@ export class HomeComponent implements OnInit {
   private createMovieList() {
     if (localStorage.getItem('list_id') === null) {
       this._MovieDBService.createMovieList().subscribe(
-        (resp: any) => {
+        (resp: CreateList) => {
           localStorage.setItem('list_id', resp.list_id)
         }
       );
@@ -113,27 +116,29 @@ export class HomeComponent implements OnInit {
   }
 
   public setMovieToList(id: number, index: number) {
-    this._MovieDBService.addMovieToList(id).subscribe(
-      (resp: any) => {
+    this._MovieDBService.addMovieToList(id).subscribe({
+      next: () => {
         this.movies[index]['favorite'] = true;
         this._MovieDBService.setMovieLocalStorage(this.movies);
 
-      }, (err) => {
-        console.error('error', err);
+      }, error: (err) => {
+        console.error('error', err.status_message);
       }
+    }
     )
   }
 
   public removeMovieInList(id: number, index: number) {
 
-    this._MovieDBService.removeMovieInList(id).subscribe(
-      (resp: any) => {
+    this._MovieDBService.removeMovieInList(id).subscribe({
+      next: () => {
         this.movies[index]['favorite'] = false;
         this._MovieDBService.setMovieLocalStorage(this.movies);
 
-      }, (err) => {
-        console.error('error', err);
+      }, error: (err) => {
+        console.error('error', err.status_message);
       }
+    }
     )
 
   }

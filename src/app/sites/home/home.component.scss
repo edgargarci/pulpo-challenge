@@ -45,6 +45,7 @@ section img {
     left: 50%;
     overflow-y: hidden;
     overflow-x: auto;
+    align-items: flex-end;
 }
 
 .background-movie {
@@ -83,6 +84,15 @@ section img {
     width: 185px;
     height: 278px;
     position: relative;
+    transition: 100ms linear;
+
+    &.active {
+        height: 320px;
+
+        img {
+            border-radius: 12px;
+        }
+    }
 
     &.favorite .add-favorite {
         display: block !important;
