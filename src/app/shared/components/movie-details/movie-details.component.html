@@ -1,0 +1,32 @@
+<section class="movie-info">
+    <p class="text-title">
+        {{movieData.original_title}} <br>
+        <span *ngIf="movieData.original_title !== movieData.title">({{movieData.title}})</span>
+    </p>
+
+    <p class="synopsys"> {{movieData.overview}} </p>
+    <br>
+    <div class="stars">
+        <ngb-rating [readonly]="true" [max]="5" [rate]="movieData.vote_average /2"></ngb-rating>
+        <span class="average">{{movieData.vote_average}}</span>
+    </div>
+
+    <div class="more-movie-info">
+        <a target="_blank" href="{{trillerUrl}}={{movieData.original_title}}+Triller">
+            <button>
+
+                <span class="material-symbols-outlined">
+                    play_circle
+                </span>
+                <span>
+                    watch now
+                </span>
+
+            </button>
+        </a>
+        <a target="_blank" href="{{trillerUrl}}={{movieData.original_title}}+Triller">Triller</a>
+    </div>
+
+
+
+</section>

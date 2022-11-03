@@ -1,0 +1,25 @@
+<div class="background-movie" style="
+    background-image: url({{urlImg}}original{{firstMovie}});
+">
+    <app-movie-details [movieData]="movieSelected"></app-movie-details>
+    <div class="background-nav">
+        <button class="arrow move-left" (click)="moveLeft()">
+            <span class="material-symbols-outlined ">arrow_circle_left</span>
+        </button>
+        <div class="vertical-movies" #moviesList>
+            <section *ngFor="let movie of movies; let i = index">
+                <div class="content-img" [ngClass]="{'favorite':movie.favorite}"
+                    (click)="setBackground(movie.backdrop_path, movie)">
+                    <img src="{{urlImg}}/w185/{{movie.poster_path}}" alt="{{movie.title}}">
+                    <button class="add-favorite"
+                        (click)="movie.favorite?removeMovieInList(movie.id, i) : setMovieToList(movie.id, i)">
+                        <span class="material-symbols-outlined">favorite</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+        <button class="arrow move-right" (click)="moveRight()">
+            <span class="material-symbols-outlined ">arrow_circle_right</span>
+        </button>
+    </div>
+</div>

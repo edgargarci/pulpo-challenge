@@ -1,0 +1,29 @@
+@import '../../shared/css/break-points.scss';
+
+section.list-favorites {
+    padding: 70px 10px;
+    background: var(--bs-gray-dark);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    list-style-type: none;
+    justify-content: space-evenly;
+    padding: 0;
+
+    @include applyMax(XS) {
+        li {
+            width: 90%;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+}

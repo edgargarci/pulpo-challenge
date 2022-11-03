@@ -1,0 +1,131 @@
+@import '../../../shared/css/break-points.scss';
+
+.container-nav {
+    position: absolute;
+    background: bottom;
+    z-index: 2;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    nav span {
+        display: none;
+    }
+
+    @include applyMax(sm) {
+        nav {
+            right: 10px;
+            color: #fff;
+            position: absolute;
+            top: 10px;
+
+            span {
+                display: block;
+                font-size: 3em;
+            }
+        }
+    }
+}
+
+ul.list-menu {
+    display: flex;
+    list-style: none;
+    z-index: 2;
+    justify-content: space-around;
+    padding: 0 37px 0 0;
+    height: 50px;
+    align-items: center;
+    font-family: "Anton", sans-serif;
+
+    @include applyMax(sm) {
+        display: none;
+    }
+}
+
+ul.list-menu>li {
+    min-width: 100px;
+    padding: 8px 20px;
+}
+
+ul.list-menu>li>a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    font-family: "Open Sans";
+    text-shadow: 1px 1px 6px #626262;
+    padding: 0px 18px;
+}
+
+li.dropdown>div {
+    display: none;
+    margin-top: 8px;
+}
+
+li.dropdown:hover>div {
+    display: flex;
+    background: rgb(131 131 131 / 94%);
+    list-style: none;
+    min-width: 150px;
+    width: auto;
+    position: absolute;
+    left: 0;
+}
+
+.dd {
+    position: absolute;
+}
+
+li.dropdown:hover>div>ul {
+    list-style: none;
+    padding-inline-start: 0;
+    padding: 1px 0px;
+    width: 100%;
+}
+
+li.dropdown:hover>div>ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    width: 100%;
+    padding: 5px 8px;
+    display: block;
+    font-family: "Open Sans";
+}
+
+li.dropdown:hover>div>ul li a:hover {
+    background: #7b7a7a;
+    color: #fff;
+}
+
+ul.list-menu>li:hover {
+    background: rgb(131 131 131 / 50%);
+}
+
+nav.right-nav {
+    display: flex;
+    color: #ffffff;
+    font-size: 18px;
+    background: rgb(255 255 255 / 13%);
+    padding: 12px;
+    margin-right: 8px;
+}
+
+nav.right-nav div {
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+}
+
+span.text-login {
+    padding: 0 0 0 3px;
+}
+
+nav.right-nav div span {
+    cursor: pointer;
+}
+
+nav.right-nav div:hover {
+    color: #009688;
+    text-shadow: 0px 0px 2px black;
+}

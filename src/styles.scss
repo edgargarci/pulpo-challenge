@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+@import 'app/shared/css/break-points.scss';
+
+body {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48
+}
+
+.text-title {
+    font-family: "Anton", sans-serif;
+    color: #fff;
+    font-size: 2em;
+    text-shadow: 1px 2px 5px black;
+    font-weight: 100;
+    max-width: calc(100% - 230px);
+
+    @include applyMax(sm) {
+        max-width: 100%;
+        font-size: 1.3em;
+    }
+}
+
+/* You can add global styles to this file, and also import other style files */
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
